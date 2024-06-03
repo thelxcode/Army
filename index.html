@@ -23,20 +23,16 @@
         /* Image Gallery Styles */
         .gallery {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            overflow: hidden; /* Hide overflow */
+            justify-content: flex-start; /* Start from left */
             align-items: center;
+            transition: transform 0.5s ease; /* Smooth transition */
+            margin-top: 20px; /* Add margin */
         }
         .gallery img {
-            width: 45%;
-            margin: 10px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            cursor: pointer; /* Add cursor pointer */
-        }
-        .gallery img:hover {
-            transform: scale(1.1);
+            width: 100px;
+            height: auto;
+            margin: 0 10px; /* Add margin */
         }
         /* Fullscreen Modal Styles */
         .modal {
@@ -81,12 +77,12 @@
         <h1>Welcome to Our Stylish Website</h1>
     </header>
 
-    <!-- Image Gallery -->
-    <div class="gallery">
-        <img src="https://i.postimg.cc/PJJsNSmk/photo.jpg" alt="Image 1" onclick="openModal('https://i.postimg.cc/PJJsNSmk/photo.jpg')">
-        <img src="https://i.postimg.cc/PJJsNSmk/photo.jpg" alt="Image 2" onclick="openModal('https://i.postimg.cc/PJJsNSmk/photo.jpg')">
-        <img src="https://i.postimg.cc/PJJsNSmk/photo.jpg" alt="Image 3" onclick="openModal('https://i.postimg.cc/PJJsNSmk/photo.jpg')">
-        <img src="https://i.postimg.cc/PJJsNSmk/photo.jpg" alt="Image 4" onclick="openModal('https://i.postimg.cc/PJJsNSmk/photo.jpg')">
+    <!-- Image Carousel -->
+    <div class="gallery" id="gallery">
+        <img src="https://i.postimg.cc/PJJsNSmk/photo.jpg" alt="Image 1">
+        <img src="https://i.postimg.cc/PJJsNSmk/photo.jpg" alt="Image 2">
+        <img src="https://i.postimg.cc/PJJsNSmk/photo.jpg" alt="Image 3">
+        <img src="https://i.postimg.cc/PJJsNSmk/photo.jpg" alt="Image 4">
     </div>
 
     <!-- Fullscreen Modal -->
@@ -96,6 +92,21 @@
     </div>
 
     <script>
+        var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            var i;
+            var slides = document.getElementsByClassName("gallery")[0].getElementsByTagName("img");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex-1].style.display = "block";
+            setTimeout(showSlides, 2000); // Change image every 2 seconds
+        }
+
         // Open modal function
         function openModal(imgSrc) {
             var modal = document.getElementById("myModal");
